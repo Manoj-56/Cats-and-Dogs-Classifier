@@ -22,6 +22,7 @@ cats = os.listdir('/content/drive/My Drive/datasets/cats_dogs/cats')
 dogs = os.listdir('/content/drive/My Drive/datasets/cats_dogs/dogs')
 len(cats),len(dogs) # Checking length
 
+# Storing Images in A list
 c = []
 for i in cats:
   try:
@@ -42,6 +43,7 @@ for i in dogs:
   except(Exception) as e:
     print(e)
 
+# Plotting Original Images
 plt.figure(figsize=(10,8))
 plt.suptitle('Before Resize...', size = 20)
 for i in range(0,16) :
@@ -60,7 +62,7 @@ for i in range(0,16) :
     # plt.tight_layout()
     plt.imshow(d[j])
 
-# Reading and storing Cats and Dogs images
+# Resizing and storing Cats and Dogs images in a list
 
 cat_data = []
 dog_data = []
@@ -82,6 +84,7 @@ for i in dogs:
   except(Exception) as e:
     print(e)
 
+# Plotting After Resize
 plt.figure(figsize=(8,8))
 plt.suptitle('After Resize and GrayScale', size = 20)
 for i in range(0,16) :
@@ -117,6 +120,7 @@ r.shuffle(data) # shuffling the Data
 len(data)
 # data
 
+# Dividing Data into Train,Test and validation
 train_fea = []
 train_lab = []
 
@@ -163,6 +167,8 @@ test_fea = test_fea.reshape((test_fea.shape[0],256,256,1))
 
 train_fea.shape
 
+# Creating Model
+
 '''model = Sequential()
 model.add(Conv2D(24,(3,3), input_shape = (180,180,1)))
 model.add(MaxPool2D(2,2))
@@ -192,6 +198,7 @@ model.compile(optimizer='adam',
 
 epoch = model.fit(train_fea,train_lab,epochs=20,batch_size = 40,validation_data=(valid_fea,valid_lab),verbose=1)
 
+# Evaluating the Model
 model.evaluate(test_fea,test_lab,verbose = 1)
 
 history = epoch.history
@@ -212,14 +219,7 @@ plt.tight_layout()
 plt.legend(['Accuracy','Val_Accuracy'])
 plt.show()
 
-def prediction(x):
-  read = cv2.imread(x)
-  color = cv2.cvtColor(read,cv2.COLOR_BGR2RGB)
-  size = cv2.resize((cv2.cvtColor(color,cv2.COLOR_RGB2GRAY)),(256,256))
-  image = np.array(size)
-  res_img = image.reshape(1,256,256,1)
-  return res_img
-
+# Plotting Predicted Output with Image
 plt.figure(figsize = (8,8))
 for i in range(0,16):
   plt.subplot(4,4,i+1)
